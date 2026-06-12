@@ -1,0 +1,73 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: tabos-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password_change_me
+      MYSQL_DATABASE: tabos
+      MYSQL_USER: tabos
+      MYSQL_PASSWORD: tabos_password_change_me
+    volumes:
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    networks:
+      - tabos-network
+
+  redis:
+    image: redis:7.0-alpine
+    container_name: tabos-redis
+    restart: always
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    networks:
+      - tabos-network
+
+  backend:
+    image: tabos-backend:latest
+    container_name: tabos-backend
+    restart: always
+    depends_on:
+      - mysql
+      - redis
+    environment:
+      - ALLOWED_ORIGINS=https://your-domain.com
+    volumes:
+      - ./config:/app/config
+      - backend_data:/app/data
+      - backend_uploads:/app/uploads
+    ports:
+      - "18080:18080"
+    networks:
+      - tabos-network
+
+  nginx:
+    image: nginx:alpine
+    container_name: tabos-nginx
+    restart: always
+    depends_on:
+      - backend
+    volumes:
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./frontend:/usr/share/nginx/html
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - tabos-network
+
+volumes:
+  mysql_data:
+  redis_data:
+  backend_data:
+  backend_uploads:
+
+networks:
+  tabos-network:
+    driver: bridge

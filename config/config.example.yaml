@@ -1,0 +1,41 @@
+server:
+  port: 18080
+  mode: release
+  name: TabOS Backend
+  cookie_domain: ""
+
+database:
+  driver: mysql
+  host: 127.0.0.1
+  port: 3306
+  username: tabos
+  password: your_password_here
+  database: tabos
+  charset: utf8mb4
+  timezone: Asia/Shanghai
+  max_idle_conns: 10
+  max_open_conns: 100
+
+redis:
+  enabled: true
+  host: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 10
+
+site:
+  name: TabOS
+  frontend_url: https://your-domain.com
+  api_base: ""
+  websocket: ""
+
+cors:
+  allow_origins:
+    - https://your-domain.com
+  allow_domains:
+    - .your-domain.com
+
+security:
+  jwt_secret: change_this_to_random_secret
+  api_sign_secret: change_this_to_random_secret
