@@ -16,38 +16,61 @@
 
 ## 📦 部署方式
 
-### 1. Docker 部署（推荐）
+### 1. 直接部署（推荐新手）
 
 ```bash
-# 克隆仓库
-git clone https://github.com/vivafriend/tabos-deploy.git
-cd tabos-deploy
+# 1. 下载完整包
+wget https://github.com/vivafriend/tabos-deploy/releases/latest/download/tabos-full-linux-x64-v1.0.6.zip
 
-# 下载最新版本的二进制文件
-wget https://github.com/vivafriend/tabos-deploy/releases/latest/download/tabos-backend-linux-amd64
-wget https://github.com/vivafriend/tabos-deploy/releases/latest/download/tabos-frontend-dist.tar.gz
+# 2. 解压
+unzip tabos-full-linux-x64-v1.0.6.zip -d /www/tabos
 
-# 使用 Docker Compose 启动
-docker-compose up -d
+# 3. 启动后端
+cd /www/tabos/backend
+chmod +x tabos-backend
+./tabos-backend
+
+# 4. 配置 Nginx 反向代理（参考文档）
 ```
-
-详细教程：[Docker 部署完整指南](docs/Docker部署完整指南.md)
-
-### 2. Linux 服务器部署
 
 详细教程：[Linux 部署完整指南](docs/Linux部署完整指南.md)
 
-### 3. 宝塔面板部署
+### 2. 宝塔面板部署
+
+下载完整包后，通过宝塔面板上传并配置。
 
 详细教程：[宝塔面板部署完整指南](docs/宝塔面板部署完整指南.md)
 
+### 3. Docker 部署（开发中）
+
+Docker 部署文档即将推出。
+
 ## 📥 下载
 
-从 [Releases](https://github.com/vivafriend/tabos-deploy/releases) 页面下载最新版本：
+从 [Releases](https://github.com/vivafriend/tabos-deploy/releases) 页面下载最新版本的完整包：
 
-- `tabos-backend-linux-amd64` - Linux x64 后端程序
-- `tabos-backend-linux-arm64` - Linux ARM64 后端程序
-- `tabos-frontend-dist.tar.gz` - 前端静态文件
+### Windows 系统
+- `tabos-full-windows-x64-v*.*.*.zip` - Windows 64位
+- `tabos-full-windows-32-v*.*.*.zip` - Windows 32位
+- `tabos-full-windows-arm64-v*.*.*.zip` - Windows ARM64
+
+### Linux 系统
+- `tabos-full-linux-x64-v*.*.*.zip` - Linux x64
+- `tabos-full-linux-arm64-v*.*.*.zip` - Linux ARM64
+- `tabos-full-linux-armv7-v*.*.*.zip` - Linux ARMv7
+
+### macOS 系统
+- `tabos-full-macos-apple-v*.*.*.zip` - macOS Apple Silicon (M1/M2/M3)
+- `tabos-full-macos-intel-v*.*.*.zip` - macOS Intel
+
+每个完整包包含：
+- ✅ 后端程序（tabos-backend）
+- ✅ 前端静态文件（web/）
+- ✅ 管理后台（web/admin/）
+- ✅ 配置文件示例
+- ✅ 必需的数据文件
+
+**解压即用，无需额外下载其他文件。**
 
 ## 📖 快速开始
 
